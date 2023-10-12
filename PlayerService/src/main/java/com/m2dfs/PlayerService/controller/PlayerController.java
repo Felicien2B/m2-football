@@ -39,10 +39,29 @@ public class PlayerController {
     }
 
     @PutMapping("/{id}")
-    public Player updatePlayer(@PathVariable int id, @RequestBody Player player) {
-        playerDB.put(id, player);
-        return player;
+    public Player updatePlayer(@PathVariable int id, @RequestBody Player updatedPlayer) {
+        Player existingPlayer = playerDB.get(id);
+
+        // Existing player
+        if (existingPlayer == null) {
+            throw new IllegalArgumentException("Player " + id + " not found!");
+        }
+
+        // Update name
+        String updatedName = updatedPlayer.getName();
+        if (updatedName != null && !updatedName.isEmpty()) {
+            existingPlayer.setName(updatedName);
+        }
+
+        // Update status
+        String updatedStatus = updatedPlayer.getStatus();
+        if (updatedStatus != null && !updatedStatus.isEmpty()) {
+            existingPlayer.setStatus(updatedStatus);
+        }
+
+        return existingPlayer;
     }
+
 
     @DeleteMapping("/{id}")
     public void deletePlayer(@PathVariable int id) {
