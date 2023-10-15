@@ -9,22 +9,18 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.m2dfs</groupId>
-	<artifactId>TeamService</artifactId>
+	<artifactId>EurekaService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>TeamService</name>
-	<description>Football project</description>
+	<name>EurekaService</name>
+	<description>Football Project</description>
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2021.0.8</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 
 		<dependency>
