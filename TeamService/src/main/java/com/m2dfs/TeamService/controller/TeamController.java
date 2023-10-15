@@ -23,7 +23,7 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
-    public Team getTeamById(@PathVariable Long id) {
+    public Team getTeamById(@PathVariable int id) {
         return teamDB.get(id);
     }
 
