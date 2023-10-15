@@ -2,7 +2,9 @@ package com.m2dfs.StatsService.controller;
 
 import com.m2dfs.StatsService.domain.PlayerStats;
 import com.m2dfs.StatsService.domain.TeamStats;
-import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +14,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/stats")
-@EnableHystrixDashboard
-@EnableCircuitBreaker
 public class StatsController {
 
         @Autowired
         private RestTemplate restTemplate;
 
+    @ApiOperation(value = "Get player info")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not found") })
         @GetMapping("/player/{playerId}")
         public String getPlayer(@PathVariable int playerId) {
             System.out.println("Getting player details for " + playerId);
@@ -45,6 +49,12 @@ public class StatsController {
         }
 
 /*
+@ApiOperation(value = "Get team stats: matches played and wins count")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not found") })
     @GetMapping("/team-stats/{teamId}")
     public TeamStats getTeamStats(@PathVariable int teamId) {
         List<Match> teamMatches = matchDB.stream()
@@ -54,6 +64,12 @@ public class StatsController {
         return calculateTeamStats(teamId, teamMatches);
     }
 
+@ApiOperation(value = "Get player stats: matches played and wins count")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 401, message = "Not authorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not found") })
     @GetMapping("/player-stats/{playerId}")
     public PlayerStats getPlayerStats(@PathVariable int playerId) {
         // Find the team to which the player belongs based on playerId
