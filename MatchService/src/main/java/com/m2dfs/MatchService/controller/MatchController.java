@@ -42,4 +42,13 @@ public class MatchController {
     public void deleteMatch(@PathVariable int id) {
         matchDB.remove(id);
     }
+
+    @GetMapping("/matches-count/{teamId}")
+    public int getMatchesCountForTeam(@PathVariable int teamId) {
+        // Assuming matchDB contains the match data
+        long matchesCount = matchDB.stream()
+                .filter(match -> match.getTeam1Id() == teamId || match.getTeam2Id() == teamId)
+                .count();
+        return (int) matchesCount;
+    }
 }
